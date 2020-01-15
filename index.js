@@ -85,6 +85,21 @@ server.get('/api/posts/:id/comments', (req,res)=>{
         res.status(404).json({ message: "The post with the specified ID does not exist." })
     }
 })
+server.delete('/api/posts/:id', (req,res)=>{
+    const {id} = req.params;
+    if(id){
+        Posts.remove(id)
+        .then(post=>{
+            res.status(200).send('Post was deleted')
+        })
+        .catch(error=>{
+            res.status(400).json({ error: "The post could not be removed" })
+        })
+
+    }else{
+        res.status(404).json({ message: "The post with the specified ID does not exist." })
+    }
+})
 server.listen(5000, ()=>{
     console.log('\n*** Server Running on http://localhost:5000 ***\n'); 
 })

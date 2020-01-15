@@ -45,6 +45,16 @@ server.post('/api/posts/:id/comments', (req, res)=>{
     }
 
 })
+server.get('/api/posts', (req,res)=>{
+    Posts.find()
+    .then(posts=>{
+        console.log(posts)
+    })
+    .catch(error=>{
+        res.status(500).json({ error: "The posts information could not be retrieved." })
+    })
+
+})
 server.listen(5000, ()=>{
     console.log('\n*** Server Running on http://localhost:5000 ***\n'); 
 })

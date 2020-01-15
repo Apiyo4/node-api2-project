@@ -100,6 +100,27 @@ server.delete('/api/posts/:id', (req,res)=>{
         res.status(404).json({ message: "The post with the specified ID does not exist." })
     }
 })
+server.put('/api/posts/:id', (req,res)=>{
+    const {id}= req.params;
+    const body = req.body;
+    if(id){
+        if(body){
+            Posts.update(id, body)
+            .then(post=>{
+                res.status(200).send(`post was updated`)
+            })
+            .catch(error=>{
+               res.status(500).json({ error: "The post information could not be modified." }) 
+            })
+
+        }else{
+            res.status(400).json({ errorMessage: "Please provide title and contents for the post." })
+        }
+
+    }else{
+        res.status(404).json({ message: "The post with the specified ID does not exist." })
+    }
+})
 server.listen(5000, ()=>{
     console.log('\n*** Server Running on http://localhost:5000 ***\n'); 
 })

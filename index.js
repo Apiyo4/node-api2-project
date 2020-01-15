@@ -71,6 +71,20 @@ server.get('/api/posts/:id', (req,res)=>{
         res.status(404).json({ message: "The post with the specified ID does not exist." })
     }
 })
+server.get('/api/posts/:id/comments', (req,res)=>{
+    if(req.params.id){
+        Posts.findPostComments(req.params.id)
+        .then(com=>{
+            res.status(200).json(com)
+        })
+        .catch(error=>{
+            res.status(500).json({ error: "The comments information could not be retrieved." })
+        })
+
+    }else{
+        res.status(404).json({ message: "The post with the specified ID does not exist." })
+    }
+})
 server.listen(5000, ()=>{
     console.log('\n*** Server Running on http://localhost:5000 ***\n'); 
 })
